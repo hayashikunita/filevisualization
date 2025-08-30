@@ -3,11 +3,15 @@
 ![CI](https://github.com/hayashikunita/filevisualization/actions/workflows/ci.yml/badge.svg)
 ![PyPI](https://img.shields.io/pypi/v/filevisualization.svg)
 
-構造化ファイル（JSON / YAML / TOML / XML）を以下の方法で可視化するPythonライブラリです。
-ビッグデータを扱う際、ワンコマンドで可視化します。
+分かりづらく汚い構造化ファイル（JSON / YAML / TOML / XML）を以下の方法で可視化するPythonライブラリです。
 
 例１
+
 <img width="237" height="167" alt="image" src="https://github.com/user-attachments/assets/d59af6aa-6490-4d19-9b49-1c71a32f1995" />
+
+例２
+
+<img width="426" height="510" alt="image" src="https://github.com/user-attachments/assets/00acc3d1-1028-45d8-a92a-3ccae3b965e8" />
 
 
 - ターミナル上のリッチな樹形図（Rich）
