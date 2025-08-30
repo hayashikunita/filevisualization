@@ -1,0 +1,9 @@
+title: Sample
+items:
+  - 1
+  - 2
+  - 3
+active: true
+meta:
+  owner: tester
+  count: 3

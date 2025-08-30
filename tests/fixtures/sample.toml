@@ -1,0 +1,8 @@
+title = "Sample"
+active = true
+
+[meta]
+owner = "tester"
+count = 3
+
+items = [1, 2, 3]

@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-test:
+    name: "${{ matrix.os }} | py${{ matrix.python-version }} | gv:${{ matrix.graphviz }}"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.10", "3.11", "3.12"]
+        graphviz: [true, false]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install OS Graphviz (Ubuntu)
+        if: matrix.graphviz == true && startsWith(matrix.os, 'ubuntu')
+        run: sudo apt-get update && sudo apt-get install -y graphviz
+
+      - name: Install OS Graphviz (macOS)
+        if: matrix.graphviz == true && startsWith(matrix.os, 'macos')
+        run: brew update && brew install graphviz
+
+      - name: Install OS Graphviz (Windows)
+        if: matrix.graphviz == true && startsWith(matrix.os, 'windows')
+        shell: pwsh
+        run: |
+          choco install graphviz -y
+
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
+
+      - name: Install deps
+        run: |
+          pip install -e .[all]
+          pip install ruff mypy bandit pytest pytest-cov pre-commit pip-licenses
+
+      - name: Pre-commit (all files)
+        run: pre-commit run --all-files --show-diff-on-failure
+
+      - name: Lint (ruff)
+        run: ruff check .
+
+      - name: Type check (mypy)
+        run: mypy
+
+      - name: Security (bandit)
+        run: bandit -r src
+
+      - name: OSS Licenses report
+        run: |
+          pip-licenses --format=markdown --with-authors --with-urls --with-license-file > licenses.md
+          pip-licenses --format=json > licenses.json
+
+      - name: Tests (pytest)
+        env:
+          FILEVIZ_TEST_FORCE_NO_GRAPHVIZ: ${{ matrix.graphviz == false && '1' || '' }}
+        run: pytest -q
