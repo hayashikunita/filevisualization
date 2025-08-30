@@ -6,6 +6,10 @@
 構造化ファイル（JSON / YAML / TOML / XML）を以下の方法で可視化するPythonライブラリです。
 ビッグデータを扱う際、ワンコマンドで可視化します。
 
+例１
+<img width="237" height="167" alt="image" src="https://github.com/user-attachments/assets/d59af6aa-6490-4d19-9b49-1c71a32f1995" />
+
+
 - ターミナル上のリッチな樹形図（Rich）
 - Graphviz によるマインドマップ風グラフ（SVG/PNG などに保存）
 - Plotly（インタラクティブHTML）
